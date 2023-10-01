@@ -12,10 +12,12 @@ mx, my = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
 running = True
 arrow = 1
-
+start_num, end_num = 0, 0
+xs = []
+ys = []
 def handle_events():
     global running
-    global mx, my
+    global mx, my, end_num
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -24,19 +26,23 @@ def handle_events():
             running = False
         elif event.type == SDL_MOUSEBUTTONDOWN:
             if event.button == SDL_BUTTON_LEFT:
-                mx, my = event.x, TUK_HEIGHT - event.y
+                xs.append(event.x)
+                ys.append(TUK_HEIGHT - event.y)
+                end_num += 1
 
     pass
 
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    hand_arrow.draw(mx, my)
+    handle_events()
+    for i in range(start_num, end_num):
+        hand_arrow.draw(xs[i], ys[i])
     character.clip_draw(frame * 100, 100 * arrow, 100, 100, x, y)
     frame = (frame + 1) % 8
     update_canvas()
 
-    handle_events()
+
 
     delay(0.1)
 close_canvas()
