@@ -12,9 +12,11 @@ mx, my = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
 running = True
 arrow = 1
-start_num, end_num = 0, 1
+end_num = 1
 xs = [x]
 ys = [y]
+line_frame = 0
+temp_x, temp_y = 0, 0
 def handle_events():
     global running
     global mx, my, end_num
@@ -33,24 +35,35 @@ def handle_events():
     pass
 
 def move_cha():
+    global x, y, xs, ys, line_frame, temp_x, temp_y, end_num
+    if x == xs[0] and y == ys[0]:
+        if end_num > 1:
+            temp_x, temp_y = x, y
+            for i in range(1,end_num):
+                xs[i - 1], ys[i - 1] = xs[i], ys[i]
+            end_num -= 1
+    t = line_frame / 100
+    x = (1 - t) * x + t * xs[0]
+    y = (1 - t) * y + t * ys[0]
+
     pass
 
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    handle_events()
     for i in range(1, end_num):
         hand_arrow.draw(xs[i], ys[i])
     if xs[0] > x:
         arrow = 1
     else:
         arrow = 0
+    line_frame = (line_frame + 5) % (100 + 1)
     move_cha()
+    if line_frame == 100:
+        line_frame = 0
     character.clip_draw(frame * 100, 100 * arrow, 100, 100, x, y)
     frame = (frame + 1) % 8
     update_canvas()
-
-
-
+    handle_events()
     delay(0.1)
 close_canvas()
