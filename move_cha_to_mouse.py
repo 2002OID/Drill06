@@ -8,12 +8,15 @@ character = load_image('animation_sheet.png')
 hand_arrow = load_image('hand_arrow.png')
 
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
-
+frame = 0
 running = True
-
+arrow = 1
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    update_canvas()
 
+    character.clip_draw(frame * 100, 100 * arrow, 100, 100, x, y)
+    frame = (frame + 1) % 8
+    update_canvas()
+    delay(0.1)
 close_canvas()
