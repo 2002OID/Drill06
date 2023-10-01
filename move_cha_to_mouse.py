@@ -32,16 +32,20 @@ def handle_events():
 
     pass
 
+def move_cha():
+    pass
+
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     handle_events()
-    for i in range(start_num, end_num):
+    for i in range(1, end_num):
         hand_arrow.draw(xs[i], ys[i])
-    #if xs[0] > x:
-        #arrow = 1
-    #else:
-        #arrow = 0
+    if xs[0] > x:
+        arrow = 1
+    else:
+        arrow = 0
+    move_cha()
     character.clip_draw(frame * 100, 100 * arrow, 100, 100, x, y)
     frame = (frame + 1) % 8
     update_canvas()
