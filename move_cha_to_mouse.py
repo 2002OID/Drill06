@@ -12,9 +12,9 @@ mx, my = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
 running = True
 arrow = 1
-start_num, end_num = 0, 0
-xs = []
-ys = []
+start_num, end_num = 0, 1
+xs = [x]
+ys = [y]
 def handle_events():
     global running
     global mx, my, end_num
@@ -38,6 +38,10 @@ while running:
     handle_events()
     for i in range(start_num, end_num):
         hand_arrow.draw(xs[i], ys[i])
+    #if xs[0] > x:
+        #arrow = 1
+    #else:
+        #arrow = 0
     character.clip_draw(frame * 100, 100 * arrow, 100, 100, x, y)
     frame = (frame + 1) % 8
     update_canvas()
