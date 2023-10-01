@@ -36,23 +36,23 @@ def handle_events():
 
 def move_cha():
     global x, y, xs, ys, line_frame, temp_x, temp_y, end_num
-    if x == xs[0] and y == ys[0]:
-        if end_num > 1:
-            temp_x, temp_y = x, y
-            for i in range(1,end_num):
-                xs[i - 1], ys[i - 1] = xs[i], ys[i]
-            end_num -= 1
     t = line_frame / 100
     x = (1 - t) * x + t * xs[0]
     y = (1 - t) * y + t * ys[0]
-
+    if line_frame == 100:
+        temp_x, temp_y = x, y
+        if end_num > 1:
+            for i in range(1, end_num):
+                xs[i - 1], ys[i - 1] = xs[i], ys[i]
+            end_num -= 1
     pass
 
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    for i in range(1, end_num):
-        hand_arrow.draw(xs[i], ys[i])
+    for i in range(0, end_num):
+        if xs[i] != x and ys[i] != y:
+            hand_arrow.draw(xs[i], ys[i])
     if xs[0] > x:
         arrow = 1
     else:
